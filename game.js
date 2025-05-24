@@ -46,7 +46,7 @@ class Game{
                 //停止遊戲循環
                 clearInterval(this.timer)
                 //調用遊戲結束
-                this.gameover()
+                this.gameover();
             }
         }, 100);
     }

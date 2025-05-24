@@ -100,7 +100,7 @@ class Snake{
             const headX=head.offsetLeft
             const headY=head.offsetTop
             if(headX<0 || headY<0||headX>=this.map.clientWidth||headY>=this.map.clientHeight){
-                return true
+                return true; 
             }
             for (let i = 1; i < this.snakelist.length; i++) {
                 const body = this.snakelist[i];
