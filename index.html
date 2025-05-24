@@ -86,14 +86,25 @@ div.food{
     font-weight: bold;
     text-shadow: 0 0 10px white, 0 0 20px gold;
 }
-
+.panbg{
+    width: 1000px;
+    height: 600px;
+    background:rgb(0,0,0,0.814)url(./IMG/game\ over.png)no-repeat;
+    background-size: 600px ;
+    background-position: center;
+    position: fixed;
+    z-index: 999;
+    top: 0;left: 0;right: 0;bottom: 0;margin: auto;
+    display: none;
+}   
 </style>
 </head>
 <body>
+    <div class="panbg"></div>
     <div class="btnbox">
         <button id="start">開始</button>
         <button id="pause">暫停</button>
-        <button id="restart">結束</button>
+        <button id="restart">重新開始</button>
         <div class="score">得分: <span>0</span></div>
     </div>
     <div class="map">
@@ -103,7 +114,7 @@ div.food{
     <script src="./snake.js"></script>
     <script src="./game.js"></script>
     <script>
-      const game=new Game(".map")
+      const game=new Game(".map",".score span",".panbg")
       //拿到按鈕
       const start=document.querySelector("#start")
       const pause=document.querySelector("#pause")
