@@ -1,6 +1,7 @@
 //遊戲設計
 class Game{
     constructor(select,scoreEle,gameoverbg){
+       
         //遊戲結束的畫面
         this.gameoverimg=document.querySelector(gameoverbg)
         //取得遊戲開始按鈕
@@ -21,6 +22,9 @@ class Game{
     }
     //定義遊戲開始的方法
     start(){
+        //若遊戲結束不再開始
+        if(this.isgameover) return;
+
         //清除舊的計時器
         if(this.timer){
             clearInterval(this.timer);
@@ -71,5 +75,6 @@ class Game{
         this.gameoverimg.style.display="block"
         //遊戲結束禁用開始按鈕
         this.startbtn.disabled=true
+        this.isgameover=true
     }
 }

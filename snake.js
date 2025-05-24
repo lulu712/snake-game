@@ -102,6 +102,15 @@ class Snake{
             if(headX<0 || headY<0||headX>=this.map.clientWidth||headY>=this.map.clientHeight){
                 return true
             }
+            for (let i = 1; i < this.snakelist.length; i++) {
+                const body = this.snakelist[i];
+                if (
+                    headX === body.offsetLeft &&
+                    headY === body.offsetTop
+                ) {
+                    return true; // 蛇頭撞到身體
+                }
+            }
             return false
         }
            
