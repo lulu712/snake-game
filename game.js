@@ -69,10 +69,11 @@ class Game{
 
     startTimeCounter() {
         this.time = 0;
+        //先清除它，避免重複啟動多個計時器。
         if (this.timeTimer) {
           clearInterval(this.timeTimer);
         }
-      
+        //啟動新的計時器
         this.timeTimer = setInterval(() => {
           this.time++;
           if (this.gametime) {
