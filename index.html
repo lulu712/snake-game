@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>貪食蛇小遊戲</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
 <style>
     *{
         margin: 0;
@@ -18,23 +21,33 @@
         background-size: cover;
     }
     h1{
-        text-align: center;
+        font-family: 'Rubik Mono One', monospace;
         font-size: 60px;
-        text-shadow:
-            1px 1px 0 #3a3124,
-            2px 2px 0 #c2a939,
-            3px 3px 0 #aaa,
-            4px 4px 0 #999,
-            5px 5px 0 #888,
-            6px 6px 0 #777,
-            7px 7px 0 #666,
-            8px 8px 0 #ac8686;
-         background: linear-gradient(45deg, #ffd700, #e1a154);
+        font-style: italic;
+        font-weight: bold;
+        text-align: center;
+        background: linear-gradient(
+                    90deg,
+                    #ffc0cb,
+                    #ffb347,
+                    #fceabb,
+                    #a0f1ea,
+                    #b19cd9
+                );
+        background-size: 300% 300%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+
+        animation: gradientText 5s ease infinite;
+        text-shadow:
+            1px 1px 3px rgba(226, 220, 220, 0.5),
+            2px 2px 6px rgba(0, 0, 0, 0.2);
+        margin-bottom: 40px;
         
-    }
-    .btnbox{
+         }
+.btnbox{
         width: 200px;
         height: 300px;
         /* background-color: blueviolet; */
@@ -44,15 +57,46 @@
         align-items: center;
         position: fixed;
     }
-.btnbox button{
-    width: 100px;
-    height: 50px;
-    font-size: 23px;
-    background-color: orange;
-    color: white;
-    border-radius:20px ;
-    box-shadow: 0 4px 8px rgba(13, 11, 11, 0.3);
+.btnbox button {
+        width: 120px;
+        height: 50px;
+        font-family: 'Rubik Mono One', monospace;
+        font-size: 20px;
+        font-weight: bold;
+        color: rgb(30, 29, 35);
+        background: linear-gradient(45deg, #ffb347, #fceabb, #a0f1ea, #b19cd9);
+        background-size: 400% 400%;
+        border:none;
+        border-radius: 15px;
+        box-shadow:
+            0 4px 8px rgba(255, 179, 71, 0.6),
+            inset 0 -3px 6px rgba(0,0,0,0.15);
+        cursor: pointer;
+        transition: background-position 3s ease, box-shadow 0.3s ease;
+        text-shadow:
+            1px 1px 2px rgba(0,0,0,0.25);
+        animation: gradientButton 8s ease infinite;
 }
+
+.btnbox button:hover {
+        background-position: 100% 50%;
+        box-shadow:
+            0 6px 12px rgba(255, 179, 71, 0.9),
+            inset 0 -3px 6px rgba(0,0,0,0.25);
+        }
+
+/* 漸層動畫 */
+ @keyframes gradientButton {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+        }
 .map{
     width: 1000px;
     height: 600px;
@@ -84,7 +128,7 @@ div.food{
 }
 @keyframes foodAnimate{
     0%{
-        box-shadow: 0px 0px 10px white;
+        box-shadow: 0px 0px 10px rgb(198, 118, 118);
     }
     50%{
         box-shadow: 0px 0px 80px white;
@@ -93,7 +137,7 @@ div.food{
         box-shadow: 0px 0px 10px white;
     }
 }
-.score{
+/* .score{
     color: white;
     font-size: 25px;
     font-weight: bold;
@@ -103,7 +147,7 @@ div.food{
     font-size: 30px;
     font-weight: bold;
     text-shadow: 0 0 10px white, 0 0 20px gold;
-}
+} */
 .panbg{
     width: 1000px;
     height: 600px;
@@ -112,23 +156,64 @@ div.food{
     background-position: center;
     position: fixed;
     z-index: 999;
-    top: 0;left: 0;right: 0;bottom: 0;margin: auto;
+    top: 50px;left: 0;right: 0;bottom: 0;margin: auto;
     display: none;
-}   
+}
+#gamescore{
+    position: absolute;
+    top: 50px;
+}
+.gametime,.score{
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-style:italic ;
+    font-family: "Rubik Mono One", monospace;
+    background: linear-gradient(
+      90deg,
+      #ffc0cb,
+      #ffb347,
+      #fceabb,
+      #a0f1ea,
+      #b19cd9
+    );
+    background-size: 300% 300%;
+    
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+
+    animation: gradientText 5s ease infinite;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5),
+                 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes gradientText {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 </style>
 </head>
 <body>
-    <h1>貪食蛇大冒險</h1>
+    <h1>Snake Adventure</h1>
     <div class="panbg"></div>
+    <div id="gametime" class="gametime">Game time：0 S</div>
+    <div class="score" id="gamescore">Score: <span>0</span></div>
     <div class="btnbox">
-        <button id="start">開始</button>
-        <button id="pause">暫停</button>
-        <button id="restart">重新開始</button>
-        <div class="score">得分: <span>0</span></div>
+        <button id="start">Start</button>
+        <button id="pause">Pause</button>
+        <button id="restart">Restart</button>   
     </div>
     <div class="map">
     </div>
     <audio id="bgm" src="./IMG/kids-game-gaming-background-music-295075.mp3" loop></audio>
+    <audio id="eatbgm" src="./IMG/coin-bgm.mp3"></audio>
+    <audio id="gameoverbgm" src="./IMG/gameover.mp3"></audio>
     <script src="./food.js"></script>
     <script src="./snake.js"></script>
     <script src="./game.js"></script>
@@ -154,7 +239,9 @@ div.food{
         game.restart()
       }
       //鍵盤監聽(左:37,上:38,右:39,下40)
-      document.onkeydown=function(e){
+      document.addEventListener("keydown",function(e){
+        //遊戲結束後禁止觸發按鈕
+        if(game.isgameover) return;
         //找到按鍵的代碼
         // console.log(e.keyCode)
         switch(e.keyCode){
@@ -172,11 +259,18 @@ div.food{
                 break;
             case 13:
                 game.start()
+                if(bgm.paused){
+                   bgm.play();          
+        }
                 break;
             case 32:
                 game.pause()
                 break;
+            case 90:
+                game.restart()
+                break;
         }
-      }
+        
+      })
     </script>
 </html>

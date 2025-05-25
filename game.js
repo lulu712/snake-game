@@ -6,22 +6,35 @@ class Game{
         this.gameoverimg=document.querySelector(gameoverbg)
         //取得遊戲開始按鈕
         this.startbtn=document.querySelector("#start")
+        //取得時間
+        this.gametime = document.querySelector("#gametime")
         //地圖
         this.map=document.querySelector(select)
         //記分板
         this.scoreEle=document.querySelector(scoreEle)
         //食物
         this.food=new Food(select)
+        //抓取食物音效
+        this.eatbgm=document.getElementById("eatbgm")
+        //抓取遊戲結束音效
+        this.gameoverbgm=document.getElementById("gameoverbgm")
         //蛇
         this.snake=new Snake(select) 
         //定義計時器
         this.timer=0
-        // this.start()
+        //更新時間
+        this.timeTimer=null
         //得分
-        this.cunt=0
+        this.count=0
+        //讓速度隨著分數加快
+        this.speed=400;
+
     }
     //定義遊戲開始的方法
     start(){
+
+        this.startTimeCounter();
+
         //若遊戲結束不再開始
         if(this.isgameover) return;
 
@@ -40,6 +53,9 @@ class Game{
                 this.food.foodpos()
                 //調用得分增加更新分數
                 this.scorechange()
+                //吃到食物有音效
+                this.eatbgm.currentTime = 0
+                eatbgm.play()
             }
             //判斷蛇是否死亡
             if(this.snake.isDie()){
@@ -48,8 +64,22 @@ class Game{
                 //調用遊戲結束
                 this.gameover();
             }
-        }, 100);
+        },this.speed);
     }
+
+    startTimeCounter() {
+        this.time = 0;
+        if (this.timeTimer) {
+          clearInterval(this.timeTimer);
+        }
+      
+        this.timeTimer = setInterval(() => {
+          this.time++;
+          if (this.gametime) {
+            this.gametime.innerText = `Game time：${this.time} S`;
+          }
+        }, 1000);
+      }
     //暫停
     pause(){
         clearInterval(this.timer)
@@ -58,7 +88,11 @@ class Game{
     restart(){
         //釋放開始按鈕
           this.startbtn.disabled=false
-        window.location.reload()
+          window.location.reload()
+          //尚未優化初始值,只能先靠頁面刷新重新整理
+        //   clearInterval(this.timer)
+        //   this.snake=new Snake();
+        //   this.init()
     }
     //改變方向的方法
     change(type){
@@ -66,15 +100,36 @@ class Game{
     }
     //得分增加
     scorechange(){
-    this.cunt++
+    this.count++
     //更新記分板
-    this.scoreEle.innerText=this.cunt  
+    this.scoreEle.innerText=this.count 
+    //每1分加快一次速度,最多50ms
+    if(this.count % 1===0 && this.speed>50){
+        this.speed-=30;
+        }
+        console.log(`🚀 當前速度為 ${this.speed}ms`);
+    //重新啟動套用新速度
+    clearInterval(this.timer);
+    this.start()
+
     }
+
     //遊戲結束
     gameover(){
+        //顯示遊戲結束畫面
         this.gameoverimg.style.display="block"
         //遊戲結束禁用開始按鈕
         this.startbtn.disabled=true
+        //停止背景音樂
+        if(bgm&&!bgm.paused){
+            bgm.pause()
+            bgm.currentTime=0;
+           gameoverbgm.play()
+        }
+        //標記遊戲結束,避免重新啟動
         this.isgameover=true
+
+        //計時停止
+        clearInterval(this.timeTimer)
     }
 }
