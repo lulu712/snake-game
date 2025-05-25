@@ -28,13 +28,17 @@ class Game{
         this.count=0
         //讓速度隨著分數加快
         this.speed=400;
+        //新增一個旗標
+        this.isTimerStarted=false
 
     }
     //定義遊戲開始的方法
     start(){
-
-        this.startTimeCounter();
-
+        if(!this.isTimerStarted){
+           this.startTimeCounter(); 
+           this.isTimerStarted=true
+        }
+        
         //若遊戲結束不再開始
         if(this.isgameover) return;
 
@@ -112,7 +116,6 @@ class Game{
     //重新啟動套用新速度
     clearInterval(this.timer);
     this.start()
-
     }
 
     //遊戲結束
