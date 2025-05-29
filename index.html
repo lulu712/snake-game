@@ -200,8 +200,7 @@ div.food{
 
 #leaderboard {
   position: fixed;           /* 固定在視窗，不受內容或父元素影響 */
-  top: 80px;                 /* 距離上方 80px */
-  right: 50px;               /* 距離右邊 50px，確保不會超出畫面 */
+  top: 50px;                 /* 距離上方 80px */
   width: 220px;         /* 固定寬度 */
   background: rgba(177, 121, 121, 0.8); /* 半透明背景，讓文字更易讀 */
   border-radius: 12px;
@@ -267,13 +266,16 @@ div.food{
     <div class="panbg"></div>
     <div class="gametime"id="gametime" >Game time：0 S</div>
     <div class="score" id="gamescore">Score: <span>0</span></div>
-    <div class="leaderboard" id="leaderboard"></div>
     <div class="btnbox">
         <button id="start">Start</button>
         <button id="pause">Pause</button>
         <button id="restart">Restart</button>   
     </div>
-    <div class="map">
+    <div class="game-wrapper">
+        <div class="map"id="map"></div>
+        <div class="leaderboard" id="leaderboard"></div>
+    </div>
+   
     </div>
     <audio id="bgm" src="./IMG/kids-game-gaming-background-music-295075.mp3" loop></audio>
     <audio id="eatbgm" src="./IMG/coin-bgm.mp3"></audio>
@@ -291,6 +293,28 @@ div.food{
       const restart=document.querySelector("#restart")
 
       myLeaderboard.render("leaderboard");
+    
+      function positionLeaderboard() {
+    const map = document.getElementById('map');
+    const leaderboard = document.getElementById('leaderboard');
+
+    if (!map || !leaderboard) return;
+
+    const rect = map.getBoundingClientRect();
+
+    // 設定排行榜靠地圖右邊 50px
+    leaderboard.style.left = (rect.right + 50) + 'px';
+    leaderboard.style.top = rect.top + 'px';
+  }
+
+  // 初次執行一次
+  window.addEventListener('load', positionLeaderboard);
+  // 每次調整視窗都重新定位
+  window.addEventListener('resize', positionLeaderboard);
+
+
+
+
 
       start.onclick=function(){
         game.start()
