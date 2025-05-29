@@ -112,7 +112,7 @@ class Game{
     //更新記分板
     this.scoreEle.innerText=this.count 
     //每1分加快一次速度,最多50ms
-    if(this.count % 1===0 && this.speed>50){
+    if(this.count % 1===0 && this.speed>80){
         this.speed-=30;
         }
         // console.log(`🚀 當前速度為 ${this.speed}ms`);
@@ -144,10 +144,9 @@ class Game{
             myLeaderboard.addScore(name,this.count);
             myLeaderboard.render("leaderboard");
         
-            console.log(name, this.count);
+            // console.log(name, this.count);
     }
 
-    
     }
 
 

@@ -38,7 +38,7 @@ class leaderboard{
     ).join("")}
     </ol>
     `;
-        console.log(this.leaderboard)
+        // console.log(this.leaderboard)
     
     }
 
