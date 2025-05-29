@@ -61,9 +61,10 @@
         width: 120px;
         height: 50px;
         font-family: 'Rubik Mono One', monospace;
-        font-size: 20px;
+        font-style: italic;
+        font-size: 19px;
         font-weight: bold;
-        color: rgb(30, 29, 35);
+        color: rgb(59, 35, 180);
         background: linear-gradient(45deg, #ffb347, #fceabb, #a0f1ea, #b19cd9);
         background-size: 400% 400%;
         border:none;
@@ -197,13 +198,76 @@ div.food{
     100% { background-position: 0% 50%; }
 }
 
+#leaderboard {
+  position: absolute;      /* 固定定位 */
+  top: 80px;            /* 距離頂端80px，避免和標題重疊 */
+  left:1400px;           /* 距離左邊20px */
+  width: 220px;         /* 固定寬度 */
+  background: rgba(177, 121, 121, 0.8); /* 半透明背景，讓文字更易讀 */
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  z-index: 999;         /* 確保在其他元素上層 */
+  user-select: none;    /* 防止誤選文字 */
+}
+
+#leaderboard h3 {
+  font-size: 22px;
+  font-weight: bold;
+  font-style: italic;
+  font-family: "Rubik Mono One", monospace;
+  background: linear-gradient(
+    90deg,
+    #ffc0cb,
+    #ffb347,
+    #fceabb,
+    #a0f1ea,
+    #b19cd9
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  animation: gradientText 5s ease infinite;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5),
+               2px 2px 6px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* 排行榜清單 */
+#leaderboard ol {
+  padding-left: 8px;
+  margin: 0;
+}
+
+#leaderboard ol li {
+  font-family: "Rubik Mono One", monospace;
+  font-weight: 600;
+  font-size: 18px;
+  color: #130c0c; /* 深紅色，和漸層色調搭配 */
+  padding: 6px 2px;
+  border-bottom: 1px solid #ffb347;
+  display: flex;
+  justify-content: space-between;
+  user-select: none; /* 防止誤選文字 */
+}
+
+/* 漸層動畫 */
+@keyframes gradientText {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 </style>
 </head>
 <body>
     <h1>Snake Adventure</h1>
     <div class="panbg"></div>
-    <div id="gametime" class="gametime">Game time：0 S</div>
+    <div class="gametime"id="gametime" >Game time：0 S</div>
     <div class="score" id="gamescore">Score: <span>0</span></div>
+    <div class="leaderboard" id="leaderboard"></div>
     <div class="btnbox">
         <button id="start">Start</button>
         <button id="pause">Pause</button>
@@ -217,13 +281,16 @@ div.food{
     <script src="./food.js"></script>
     <script src="./snake.js"></script>
     <script src="./game.js"></script>
+    <script src="./Leaderboard.js"></script>
     <script>
-      const game=new Game(".map",".score span",".panbg")
+      const myLeaderboard = new leaderboard();  
+      const game=new Game(".map",".score span",".panbg",myLeaderboard)
       //拿到按鈕
       const start=document.querySelector("#start")
       const pause=document.querySelector("#pause")
       const restart=document.querySelector("#restart")
 
+      myLeaderboard.render("leaderboard");
 
       start.onclick=function(){
         game.start()
@@ -266,11 +333,18 @@ div.food{
             case 32:
                 game.pause()
                 break;
-            case 90:
+            case 90:    //功能尚未完善無法使用
                 game.restart()
                 break;
         }
         
-      })
+      }
+
+    
+    
+    )
+
     </script>
+
+</body>    
 </html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>排行榜範例</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      padding: 20px;
+    }
+    #leaderboard {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    #leaderboard h3 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="leaderboard">排行榜載入中...</div>
+
+  <script>
+    class Leaderboard {
+      constructor(storageKey = "leaderboard") {
+        this.storageKey = storageKey;
+        this.leaderboard = this.load() || [];
+      }
+
+      load() {
+        return JSON.parse(localStorage.getItem(this.storageKey));
+      }
+
+      save() {
+        localStorage.setItem(this.storageKey, JSON.stringify(this.leaderboard));
+      }
+
+      addScore(name, score) {
+        this.leaderboard.push({ name, score });
+        this.leaderboard.sort((a, b) => b.score - a.score);
+        this.leaderboard = this.leaderboard.slice(0, 10);
+        this.save();
+      }
+
+      render(containerId = "leaderboard") {
+        const boardElement = document.getElementById(containerId);
+        if (!boardElement) return;
+
+        boardElement.innerHTML = `
+          <h3>🏆 排行榜</h3>
+          <ol>
+            ${this.leaderboard.map(entry => `<li>${entry.name}：${entry.score} 分</li>`).join("")}
+          </ol>
+        `;
+      }
+    }
+
+    // 測試用：建立排行榜並加上幾筆資料
+    const lb = new Leaderboard();
+    lb.addScore("Alice", 100);
+    lb.addScore("Bob", 150);
+    lb.addScore("Charlie", 120);
+    lb.render();
+  </script>
+
+</body>
+</html>

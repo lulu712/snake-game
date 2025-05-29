@@ -1,6 +1,6 @@
 //遊戲設計
 class Game{
-    constructor(select,scoreEle,gameoverbg){
+    constructor(select,scoreEle,gameoverbg,leaderboard){
        
         //遊戲結束的畫面
         this.gameoverimg=document.querySelector(gameoverbg)
@@ -30,6 +30,9 @@ class Game{
         this.speed=400;
         //新增一個旗標
         this.isTimerStarted=false
+
+        this.leaderboard = leaderboard;
+
 
     }
     //定義遊戲開始的方法
@@ -112,7 +115,7 @@ class Game{
     if(this.count % 1===0 && this.speed>50){
         this.speed-=30;
         }
-        console.log(`🚀 當前速度為 ${this.speed}ms`);
+        // console.log(`🚀 當前速度為 ${this.speed}ms`);
     //重新啟動套用新速度
     clearInterval(this.timer);
     this.start()
@@ -135,5 +138,17 @@ class Game{
 
         //計時停止
         clearInterval(this.timeTimer)
+
+        const name = prompt("請輸入你的名字：");
+        if (name) {
+            myLeaderboard.addScore(name,this.count);
+            myLeaderboard.render("leaderboard");
+        
+            console.log(name, this.count);
     }
+
+    
+    }
+
+
 }
