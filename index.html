@@ -102,8 +102,10 @@
     width: 1000px;
     height: 600px;
     background: url(./IMG/grid_30x50_lightlines.png);
-    position: fixed;
-    top:50px;left: 0;right:0;bottom:0;
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
     margin: auto;
     box-shadow: 0px 0px 100px black inset,0px 0px 30px white;
     overflow: hidden;
@@ -199,8 +201,10 @@ div.food{
 }
 
 #leaderboard {
-  position: fixed;           /* 固定在視窗，不受內容或父元素影響 */
-  top: 50px;                 /* 距離上方 80px */
+  position: absolute;           /* 固定在視窗，不受內容或父元素影響 */
+  top: 80px;                 /* 距離上方 80px */
+  left: calc(50% + 500px + 20px); /* 地圖左邊是 50%，地圖寬 1000px */
+  transform: translateX(0);
   width: 220px;         /* 固定寬度 */
   background: rgba(177, 121, 121, 0.8); /* 半透明背景，讓文字更易讀 */
   border-radius: 12px;
@@ -294,27 +298,6 @@ div.food{
 
       myLeaderboard.render("leaderboard");
     
-      function positionLeaderboard() {
-    const map = document.getElementById('map');
-    const leaderboard = document.getElementById('leaderboard');
-
-    if (!map || !leaderboard) return;
-
-    const rect = map.getBoundingClientRect();
-
-    // 設定排行榜靠地圖右邊 50px
-    leaderboard.style.left = (rect.right + 50) + 'px';
-    leaderboard.style.top = rect.top + 'px';
-  }
-
-  // 初次執行一次
-  window.addEventListener('load', positionLeaderboard);
-  // 每次調整視窗都重新定位
-  window.addEventListener('resize', positionLeaderboard);
-
-
-
-
 
       start.onclick=function(){
         game.start()
